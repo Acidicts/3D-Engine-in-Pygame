@@ -3,7 +3,7 @@ from object_3d import *
 from camera import *
 from projection import *
 
-model = "<your model name>.obj"
+model = "untitled.obj"
 
 class SoftwareRender:
     def __init__(self):
@@ -26,24 +26,22 @@ class SoftwareRender:
     def create_objects(self):
         self.camera = Camera(self, (-5, 5, -50))
         self.projection = Projection(self)
-        self.object = self.get_object_from_file('models/' + "{}".format(model))
+        self.object = self.get_object_from_file('models/' + "untitled.obj")
 
     def get_object_from_file(self, filename):
-        vertexes, faces = [], []
-        with open(filename, "r") as file:
-            for line in file:
-                if line.startswith("v "):
-                    vertexes.append([float(i) for i in line.split()[1:]] + [1])
-                elif line.startswith("f "):
+        vertex, faces = [], []
+        with open(filename) as f:
+            for line in f:
+                if line.startswith('v '):
+                    vertex.append([float(i) for i in line.split()[1:]] + [1])
+                elif line.startswith('f'):
                     faces_ = line.split()[1:]
                     faces.append([int(face_.split('/')[0]) - 1 for face_ in faces_])
 
-        return Object3D(self, vertexes, faces)
+        return Object3D(self, vertex, faces)
 
     def draw(self):
         self.screen.fill(pygame.Color("darkslategray"))
-        self.world_axes.draw()
-        self.axes.draw()
         self.object.draw()
         self.screen.convert_alpha()
 

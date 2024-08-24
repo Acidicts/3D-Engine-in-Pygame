@@ -13,7 +13,7 @@ class Object3D:
     def __init__(self, render, vertexes, faces):
         self.render = render
         self.vertices = np.array([np.array(v) for v in vertexes])
-        self.faces = np.array([np.array(f) for f in faces])
+        self.faces = faces
 
         self.color_faces = [(pygame.Color("orange"), face) for face in self.faces]
         self.movement_flag, self.draw_vertexes = True, True
